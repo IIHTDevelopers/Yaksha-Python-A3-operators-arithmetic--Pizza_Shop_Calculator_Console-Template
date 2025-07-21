@@ -1,97 +1,80 @@
-# game_score_converter.py
+import unittest
+from skeleton import (
+    calculate_total_price,
+    apply_discount,
+    calculate_multi_pizza_cost,
+    split_bill,
+    calculate_pizzas_needed,
+    calculate_remaining_slices,
+    calculate_loyalty_points
+)
+from test.TestUtils import TestUtils
 
-"""
-Required Variable Names:
-- mining_score (string input like "100")
-- mining_points (converted to integer)
-- combat_score (decimal like 98.7)
-- combat_points (converted to integer)
-- achievement_hex (hex string like "1F")
-- achievement_bonus (converted to integer)
-- total_score (sum of all points)
-- score_display (total score as string)
-- player_stats (list with name and score)
-"""
+class TestPizzaCalculatorFunctionsYaksha(unittest.TestCase):
 
-def convert_string_to_int(mining_score):
-    """Convert string mining score to integer"""
-    # Input validation (DON'T CHANGE THIS)
-    if not isinstance(mining_score, str) or not mining_score.isdigit():
-        raise ValueError("Score must be a string containing only digits")
-    
-    # TODO: Convert mining_score to integer
-    # Hint: Use the int() function to convert string to integer
-    # Example: "100" should become 100
-    return None  # Replace None with your code
+    @classmethod
+    def setUpClass(cls):
+        cls.test_obj = TestUtils()
 
-def convert_float_to_int(combat_score):
-    """Convert float combat score to integer"""
-    # Input validation (DON'T CHANGE THIS)
-    if not isinstance(combat_score, float):
-        raise ValueError("Score must be a float")
-    if combat_score < 0:
-        raise ValueError("Score must be non-negative")
-    
-    # TODO: Convert combat_score to integer
-    # Hint: Use int() to remove decimal part
-    # Example: 98.7 should become 98
-    return None  # Replace None with your code
+    def test_calculate_total_price(self):
+        try:
+            result = calculate_total_price(299.0, 100.0) == 399.0
+            self.test_obj.yakshaAssert("TestCalculateTotalPrice", result, "functional")
+            print("TestCalculateTotalPrice =", "Passed" if result else "Failed")
+        except Exception as e:
+            self.test_obj.yakshaAssert("TestCalculateTotalPrice", False, "functional")
+            print("TestCalculateTotalPrice = Failed | Exception:", e)
 
-def convert_hex_to_int(achievement_hex):
-    """Convert hexadecimal achievement score to integer"""
-    # Input validation (DON'T CHANGE THIS)
-    if not isinstance(achievement_hex, str) or not all(c in '0123456789ABCDEFabcdef' for c in achievement_hex):
-        raise ValueError("Input must be a valid hexadecimal string")
-    
-    # TODO: Convert achievement_hex to integer
-    # Hint: Use int(achievement_hex, 16) to convert hex to integer
-    # Example: "1F" should become 31
-    return None  # Replace None with your code
+    def test_apply_discount(self):
+        try:
+            result = round(apply_discount(500.0, 20.0), 2) == 400.00
+            self.test_obj.yakshaAssert("TestApplyDiscount", result, "functional")
+            print("TestApplyDiscount =", "Passed" if result else "Failed")
+        except Exception as e:
+            self.test_obj.yakshaAssert("TestApplyDiscount", False, "functional")
+            print("TestApplyDiscount = Failed | Exception:", e)
 
-def convert_score_to_string(total_score):
-    """Convert total score to string for display"""
-    # Input validation (DON'T CHANGE THIS)
-    if not isinstance(total_score, (int, float)):
-        raise ValueError("Score must be a number")
-    
-    # TODO: Convert total_score to string
-    # Hint: Use str() to convert number to string
-    # Example: 150 should become "150"
-    return None  # Replace None with your code
+    def test_calculate_multi_pizza_cost(self):
+        try:
+            result = calculate_multi_pizza_cost(399.0, 2) == 798.0
+            self.test_obj.yakshaAssert("TestCalculateMultiPizzaCost", result, "functional")
+            print("TestCalculateMultiPizzaCost =", "Passed" if result else "Failed")
+        except Exception as e:
+            self.test_obj.yakshaAssert("TestCalculateMultiPizzaCost", False, "functional")
+            print("TestCalculateMultiPizzaCost = Failed | Exception:", e)
 
-def create_player_list(player_name, total_score):
-    """Create a list containing player name and score"""
-    # Input validation (DON'T CHANGE THIS)
-    if not isinstance(player_name, str) or not player_name:
-        raise ValueError("Player name must be a non-empty string")
-    
-    # TODO: Create and return a list with player_name and total_score
-    # Hint: Return them as [player_name, total_score]
-    # Example: Input "Steve", 100 should return ["Steve", 100]
-    return None  # Replace None with your code
+    def test_split_bill(self):
+        try:
+            result = split_bill(800.0, 4) == 200.0
+            self.test_obj.yakshaAssert("TestSplitBill", result, "functional")
+            print("TestSplitBill =", "Passed" if result else "Failed")
+        except Exception as e:
+            self.test_obj.yakshaAssert("TestSplitBill", False, "functional")
+            print("TestSplitBill = Failed | Exception:", e)
 
-if __name__ == "__main__":
-    print("Minecraft Score Calculator")
-    print("=" * 30)
-    print("Welcome to the new Minecraft scoring system!")
-    print("-" * 30)
-    
-    # TODO: Add your code here. Use these variable names:
-    # 1. Ask user for mining_score and convert to mining_points
-    # Hint: mining_score = input("Enter your mining points: ")
-    
-    # 2. Ask user for combat_score and convert to combat_points
-    # Hint: Remember to convert input to float first
-    
-    # 3. Ask user for achievement_hex and convert to achievement_bonus
-    # Hint: User will type something like "1F"
-    
-    # 4. Calculate total_score (add all points together)
-    # Hint: total_score = mining_points + combat_points + achievement_bonus
-    
-    # 5. Convert total_score to score_display
-    
-    # 6. Get player_name and create player_stats list
-    
-    # 7. Display all results nicely formatted
-    # Hint: Use print(f"Mining Points: {mining_points}")
+    def test_calculate_pizzas_needed(self):
+        try:
+            result = calculate_pizzas_needed(10, 8) == 4  # 10×3=30 slices / 8 = 3.75 => 4 pizzas
+            self.test_obj.yakshaAssert("TestCalculatePizzasNeeded", result, "functional")
+            print("TestCalculatePizzasNeeded =", "Passed" if result else "Failed")
+        except Exception as e:
+            self.test_obj.yakshaAssert("TestCalculatePizzasNeeded", False, "functional")
+            print("TestCalculatePizzasNeeded = Failed | Exception:", e)
+
+    def test_calculate_remaining_slices(self):
+        try:
+            result = calculate_remaining_slices(32, 10) == 2  # 10×3=30 eaten; 32-30 = 2 left
+            self.test_obj.yakshaAssert("TestCalculateRemainingSlices", result, "functional")
+            print("TestCalculateRemainingSlices =", "Passed" if result else "Failed")
+        except Exception as e:
+            self.test_obj.yakshaAssert("TestCalculateRemainingSlices", False, "functional")
+            print("TestCalculateRemainingSlices = Failed | Exception:", e)
+
+    def test_calculate_loyalty_points(self):
+        try:
+            result = calculate_loyalty_points(3) == 8  # 2^3 = 8
+            self.test_obj.yakshaAssert("TestCalculateLoyaltyPoints", result, "functional")
+            print("TestCalculateLoyaltyPoints =", "Passed" if result else "Failed")
+        except Exception as e:
+            self.test_obj.yakshaAssert("TestCalculateLoyaltyPoints", False, "functional")
+            print("TestCalculateLoyaltyPoints = Failed | Exception:", e)
